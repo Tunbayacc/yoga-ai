@@ -1,8 +1,9 @@
 # Tiến độ
 
-## Chuẩn bị đẩy GitHub
+## Đẩy GitHub
 - Xác minh tài khoản GitHub Tunbayacc bằng thông tin Git đã đăng nhập; dự án chưa có remote hoặc commit.
-- Đích dự kiến: repository riêng tư Tunbayacc/yoga-ai, nhánh main.
+- Đã tạo repository riêng tư https://github.com/Tunbayacc/yoga-ai, đẩy nhánh main và thiết lập origin/main.
+- Xác minh SHA trên GitHub khớp commit cục bộ; mã nguồn đã được đồng bộ.
 - Kiểm tra trước khi đẩy: npm test 36/36 đạt, npm run build đạt; rà soát mã không phát hiện mẫu private key/token phổ biến.
 - Mã nguồn, ảnh minh họa, tài liệu và kiểm thử được đưa vào Git. node_modules, dist, .env, log, WASM và model tải về được bỏ qua bằng .gitignore.
 

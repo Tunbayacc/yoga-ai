@@ -1,5 +1,7 @@
 # Yoga AI
 
+Repository: [Tunbayacc/yoga-ai](https://github.com/Tunbayacc/yoga-ai) (riêng tư), nhánh `main`.
+
 Website luyện tập Yoga bằng React + Vite + JavaScript. MediaPipe Pose Landmarker xử lý webcam ngay trong trình duyệt, vẽ 33 điểm mốc và bộ xương, tính góc và đánh giá tư thế đã chọn: Mountain, Warrior II, Tree. Không backend, database, tài khoản, ghi hình hoặc gửi ảnh đến máy chủ.
 
 ## Cài đặt và chạy
