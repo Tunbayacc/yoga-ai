@@ -109,6 +109,13 @@
 
 # Tiến độ UAT — Yoga AI
 
+## Thoát toàn màn hình và iPhone — 18/10/2026
+- Đã triển khai READY dpl_6uihW59qCkHj2G4B4MQuCkSqpEsB tại https://yoga-ai-six.vercel.app.
+- Thay nhãn Esc bằng nút Thoát toàn màn hình góc trên bên phải, có safe-area; bỏ nút thoát trùng ở dưới.
+- Không khóa nút khi Fullscreen API thiếu/bị chặn: dùng mở rộng camera fixed trong trang, giữ video/canvas/điều khiển, khóa cuộn và khôi phục khi thoát. Thanh trình duyệt có thể vẫn hiện trên iPhone. Esc vẫn hoạt động.
+- npm test 41/41 đạt, build đạt. verify-fullscreen.mjs: native/thiếu API/reject API đều đạt, nút thoát ở trên, kích thước mobile, toggle khung xương, khôi phục cuộn và Escape.
+- Chưa kiểm tra iPhone thật, camera thật và xoay thiết bị; cần xác minh thủ công.
+
 ## Đồng bộ GitHub — 18/10/2026
 - Gom các thay đổi đã triển khai: cấu hình Vercel, 48 MP3 và chọn bản thu, đổi camera mobile, bật/tắt khung xương, giao diện Liquid Glass đã duyệt, tài liệu và QA.
 - Bao gồm mã/ảnh bản xem thử để lưu lịch sử thiết kế; .vercel, node_modules, dist, model/WASM và môi trường riêng vẫn được bỏ qua theo .gitignore.

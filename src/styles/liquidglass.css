@@ -1,4 +1,10 @@
 /* Liquid Glass theme approved by the user. */
+.camera-stage.camera-expanded { position: fixed; inset: 0; z-index: 1000; width: 100%; height: 100dvh; min-height: 0; max-width: none; max-height: none; margin: 0; border-radius: 0; aspect-ratio: auto; background: #14271e; }
+.camera-stage .fullscreen-exit { position: absolute; top: max(16px, env(safe-area-inset-top)); right: max(16px, env(safe-area-inset-right)); z-index: 5; min-height: 44px; }
+.camera-stage:has(.fullscreen-exit) .tracking-overlay { top: max(76px, calc(env(safe-area-inset-top) + 60px)); }
+.camera-stage.camera-expanded .fullscreen-controls { bottom: max(20px, env(safe-area-inset-bottom)); right: max(16px, env(safe-area-inset-right)); }
+.camera-stage.camera-expanded .overlay-label { bottom: max(84px, calc(env(safe-area-inset-bottom) + 68px)); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 :root { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #183e36; background: #e8f2f0; }
 body { background: radial-gradient(ellipse at 5% 12%, #b5e4d4 0, transparent 43%), radial-gradient(ellipse at 100% 38%, #c4d8f9 0, transparent 47%), radial-gradient(ellipse at 42% 88%, #e3d6ee 0, transparent 50%), #edf4f0; background-attachment: fixed; }
 .preview-label { padding: 10px 24px; display: flex; justify-content: center; align-items: center; gap: 18px; font-size: 10px; font-weight: 750; letter-spacing: 1.5px; background: #173e37; color: #fff; }

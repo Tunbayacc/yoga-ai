@@ -34,7 +34,7 @@ Trong khung camera có nút **Camera sau / Camera trước** trên thiết bị 
 
 ### Toàn màn hình camera
 
-Nhấn **Toàn màn hình** ở góc dưới bên phải khung camera. Video, bộ xương và trạng thái nhận diện phóng ra toàn màn hình với tỷ lệ hình ảnh giữ nguyên. Thoát bằng **Thoát toàn màn hình** hoặc **Esc**; vẫn có nút **Tắt camera** trong khung. Có thể vào toàn màn hình trước khi bật camera. Nếu trình duyệt nhúng không cho phép Fullscreen API, mở địa chỉ localhost trong Chrome hoặc Edge.
+Nhấn **Toàn màn hình** để mở rộng camera. Nút **Thoát toàn màn hình** nằm ở góc trên bên phải, có khoảng cách an toàn với tai thỏ; Esc vẫn dùng được trên máy tính. Nếu trình duyệt không hỗ trợ hoặc từ chối Fullscreen API (ví dụ một số iPhone/trình duyệt nhúng), camera tự mở rộng trong trang, giữ cả video, khung xương và các nút điều khiển; thanh trình duyệt có thể vẫn hiển thị. Thoát sẽ khôi phục cuộn trang. scripts/verify-fullscreen.mjs kiểm tra native và hai trường hợp API thiếu/bị từ chối trên Edge; iPhone thật vẫn cần kiểm tra thủ công.
 
 ### Điểm số và tiến trình trực tiếp
 
