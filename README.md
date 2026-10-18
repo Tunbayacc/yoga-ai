@@ -26,6 +26,12 @@ npm run preview
 
 ## Cách đánh giá
 
+Nhấn **Tắt khung xương / Bật khung xương** trong camera để ẩn hoặc hiện các điểm khớp và đường nối. Nút cũng có trong toàn màn hình. AI vẫn nhận diện, chấm điểm và nhắc bằng giọng nói khi khung xương bị ẩn.
+
+### Camera trên điện thoại
+
+Trong khung camera có nút **Camera sau / Camera trước** trên thiết bị di động. Có thể chọn trước khi bật hoặc đổi khi đang luyện tập; nút tạm khóa khi khởi động. Đổi camera sẽ dừng camera cũ và bắt đầu lại tiến trình giữ tư thế. Camera trước hiển thị như gương, camera sau không lật hình. Máy tính chỉ dùng camera trước, không hiển thị nút đổi. Thiết bị không có camera đã chọn sẽ hiển thị lỗi để đổi lại. Cần kiểm tra hai camera thật trên điện thoại; scripts/verify-camera-switch.mjs chỉ dùng stream tổng hợp trong QA.
+
 ### Toàn màn hình camera
 
 Nhấn **Toàn màn hình** ở góc dưới bên phải khung camera. Video, bộ xương và trạng thái nhận diện phóng ra toàn màn hình với tỷ lệ hình ảnh giữ nguyên. Thoát bằng **Thoát toàn màn hình** hoặc **Esc**; vẫn có nút **Tắt camera** trong khung. Có thể vào toàn màn hình trước khi bật camera. Nếu trình duyệt nhúng không cho phép Fullscreen API, mở địa chỉ localhost trong Chrome hoặc Edge.
@@ -42,11 +48,11 @@ Logic nằm trong `src/services/practiceTracker.js`; UI trong `src/components/Li
 
 ### Nhắc bằng giọng nói
 
-Nhấn **Bật giọng nói** bên dưới camera, sau đó bật webcam. Ứng dụng đọc tiếng Việt: từng khớp cần chỉnh, thông báo đạt các tiêu chí tham chiếu, hoặc nhắc đưa cơ thể vào khung hình khi thiếu dữ liệu. Chờ kết quả ổn định thêm 1.5 giây; các câu cách nhau ít nhất 8 giây, cùng nhóm kết quả nhắc lại sau 20 giây và luân phiên bộ phận cần chỉnh. Nhấn **Tắt giọng nói** để dừng; dừng camera, đổi tư thế/bên chân, chuyển tab hoặc rời trang sẽ hủy câu đang đọc. Không xin quyền microphone.
+Nhấn **Bật giọng nói** để nghe bộ 48 bản thu tiếng Việt trong public/audio/vi. Không cần cài giọng tiếng Việt trên điện thoại; không dùng SpeechSynthesis hoặc dịch vụ tạo giọng trực tuyến. Các tệp được tải từ website khi cần phát, nên cần kết nối mạng. Nội dung bản thu và tên tệp nằm trong docs/VOICE_RECORDING_SCRIPT.md; bảng nội dung trong src/data/voiceClips.js. Lời nhắc gần nhất hiển thị đúng nội dung bản thu.
 
-Sử dụng [SpeechSynthesis của trình duyệt](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis), không thêm thư viện hoặc backend. Ưu tiên giọng tiếng Việt trên thiết bị; nếu chỉ có giọng tiếng Việt trực tuyến, trình duyệt có thể cần mạng và gửi nội dung lời nhắc cho dịch vụ giọng nói. Hình ảnh camera vẫn xử lý trong trình duyệt. Nếu không có giọng tiếng Việt hoặc API không hỗ trợ, giao diện thông báo rõ và tiếp tục hiển thị phản hồi bằng chữ. Độ chính xác phát âm và âm lượng cần nghe thử trên thiết bị thật.
+Chờ kết quả ổn định 1.5 giây; cách nhau ít nhất 8 giây, cùng nhóm kết quả nhắc lại sau 20 giây và luân phiên bộ phận. Giữ bản thu đang phát nếu hướng dẫn còn phù hợp; dừng khi lỗi hết, dữ liệu thiếu, đổi tư thế/bên chân, dừng camera, chuyển tab hoặc rời trang. Thiếu điểm dùng bản thu chung, không xác nhận đạt. Không xin quyền microphone.
 
-Logic nằm ở `src/services/voiceFeedback.js` và `src/hooks/useVoiceFeedback.js`. QA hook bằng Speech API giả lập: `scripts/verify-voice.mjs` (nhận đường dẫn node_modules chứa Playwright, cần Edge và server dev cổng 5173).
+Logic chọn bản thu: src/services/recordedVoice.js. Hook dùng cùng một phần tử Audio sau cú nhấn để hỗ trợ trình duyệt điện thoại. Lỗi phát/tải âm thanh sẽ tắt giọng và cho phép bật lại. scripts/verify-voice.mjs kiểm tra giải mã 48 tệp, phát/dừng khi không có SpeechSynthesis, đổi tư thế và lỗi tải ở viewport 390px; không chứng minh loa và chính sách phát trên điện thoại thật.
 
 Nội dung chi tiết nằm trong `src/services/poseCoaching.js`, dùng chung cho giọng nói và hướng dẫn chữ. Lời nhắc gồm bộ phận/bên cơ thể, dấu hiệu đo được trong hình, hướng điều chỉnh và cách giữ thoải mái. Gối trước Warrior II có hướng dẫn khác nhau khi gập quá sâu hoặc còn duỗi; tay cao/thấp nhận hướng hạ/nâng tương ứng; Tree có hướng dẫn riêng cho chân trụ, chân gập, độ nâng và vị trí bàn chân. Khi thiếu điểm mốc, lời nhắc nêu vùng chưa được quan sát thay vì chẩn đoán lỗi tư thế.
 

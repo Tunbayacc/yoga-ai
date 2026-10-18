@@ -109,6 +109,56 @@
 
 # Tiến độ UAT — Yoga AI
 
+## Đồng bộ GitHub — 18/10/2026
+- Gom các thay đổi đã triển khai: cấu hình Vercel, 48 MP3 và chọn bản thu, đổi camera mobile, bật/tắt khung xương, giao diện Liquid Glass đã duyệt, tài liệu và QA.
+- Bao gồm mã/ảnh bản xem thử để lưu lịch sử thiết kế; .vercel, node_modules, dist, model/WASM và môi trường riêng vẫn được bỏ qua theo .gitignore.
+- Kiểm tra git diff --check đạt; kiểm thử gần nhất 41/41 và build production đạt, không thay logic sau lần kiểm tra đó.
+
+## Áp dụng Liquid Glass đã duyệt — 18/10/2026
+- Production READY: dpl_KnaCJyvdPj6P48HBwkEKpkxubX2z, https://yoga-ai-six.vercel.app.
+- Người dùng đã đồng ý áp dụng bản xem thử. Sao chép theme sang src/styles/liquidglass.css và import sau app.css trong main.jsx; trang chính không có nhãn bản thử.
+- npm test 41/41 đạt; npm run build đạt (47 modules). Edge desktop 1440px/mobile 390px: theme tải đúng, không tràn ngang, nút camera nằm trong khung, đổi tư thế và bật/tắt khung xương hoạt động, không pageerror.
+- Không thay đổi logic MediaPipe/quy tắc tư thế. Hiệu năng kính mờ và webcam trên điện thoại thật cần kiểm tra thủ công.
+
+## Xem thử Liquid Glass — 18/10/2026
+- Tạo previews/liquidglass/index.html, preview.js và theme.css riêng; chỉ trang xem thử import lớp giao diện mới, không sửa giao diện chính, không deploy Vercel khi chưa có người dùng chấp thuận.
+- Nền ngọc/lam, thanh điều hướng kính mờ, nút capsule viền sáng, nội dung nền ít trong suốt để dễ đọc; có fallback và giảm chuyển động/độ trong suốt.
+- Đã xem ảnh desktop 1440px và mobile 390px; mobile không tràn ngang, bật/tắt khung xương hoạt động. Chưa đo hiệu năng blur trên điện thoại thật.
+
+## Bật/tắt khung xương — 18/10/2026
+- Thêm nút Tắt/Bật khung xương trong khung camera và toàn màn hình trên mọi thiết bị; mặc định bật, giữ lựa chọn khi đổi tư thế/camera trong phiên trang.
+- Chỉ ẩn/hiện canvas, không thay đổi nhận diện, chấm điểm hoặc giọng nói.
+- npm test 41/41 đạt, npm run build đạt. Edge viewport 390px kiểm tra ẩn/hiện canvas, aria-pressed và giữ lựa chọn khi đổi tư thế: đạt. Webcam thật vẫn cần kiểm tra thủ công.
+
+## Đổi camera điện thoại — 18/10/2026
+- Đã triển khai production READY: dpl_Bh4X2oXoGwAfQevac1q4W5TJ128T, https://yoga-ai-six.vercel.app.
+- Điện thoại có nút Camera sau/Camera trước trong khung camera và toàn màn hình; chọn khi tắt hoặc chuyển trực tiếp khi đang chạy. Máy tính không có nút đổi, tiếp tục yêu cầu camera trước.
+- Đóng stream/model cũ trước khi mở camera mới, reset feedback/thời gian giữ và lời nhắc; khóa đổi khi đang tải. Yêu cầu đúng facingMode trên mobile, báo lỗi nếu camera không có thay vì âm thầm dùng camera khác.
+- Camera trước lật gương, camera sau không lật; video và canvas dùng cùng phép biến đổi. Không sửa quy tắc đánh giá tư thế.
+- npm test: 41/41 đạt; npm run build đạt (46 modules). scripts/verify-camera-switch.mjs đạt trên Edge với UA Android và stream tổng hợp: chọn sau/trước, kết thúc track cũ, dừng camera, rear không lật, desktop 390px không hiện nút, không pageerror.
+- Camera vật lý trước/sau trên iQOO và hiệu năng khi chuyển cần người dùng thử thủ công; QA tổng hợp không xác minh phần cứng thật.
+
+## Tích hợp MP3 tiếng Việt — 15/10/2026
+- Đã triển khai production dpl_EbmaaXBXrhrhLjGqDeCDAVnNDp3G tại https://yoga-ai-six.vercel.app. Chạy lại QA âm thanh trên URL production: đạt đủ 48 tệp, phát/dừng, đổi tư thế và lỗi mạng.
+- Đã nhận đủ 48 MP3 trong public/audio/vi, thêm bảng nội dung ngắn và ánh xạ từ tiêu chí sang đúng tệp theo bên, vai cao và hướng gập/duỗi/nâng/hạ.
+- Hook chuyển từ SpeechSynthesis sang Audio tái sử dụng sau cú nhấn; không yêu cầu giọng tiếng Việt hệ thống. Hiển thị nội dung đúng bản thu, xử lý lỗi tải/phát và dọn audio khi tắt, đổi tư thế, đổi phiên camera, ẩn trang hoặc unmount.
+- npm test: 39/39 đạt; npm run build đạt (45 modules). Edge QA viewport 390px: giải mã đủ 48 MP3, phát khi không có SpeechSynthesis, tắt/đổi tư thế dừng audio, lỗi mạng hiện thông báo; không pageerror.
+- Chưa nghe xác minh nội dung từng bản thu; chưa kiểm chứng loa, quyền phát dài hạn và webcam thật trên iQOO/Android. Cần thử thủ công.
+
+## Kịch bản ghi âm — 15/10/2026
+- Rút gọn 48 lời nhắc trong docs/VOICE_RECORDING_SCRIPT.md; giữ nguyên tên tệp, thứ tự, bên cơ thể và hướng điều chỉnh.
+- Giữ các lưu ý về không khóa khớp, tránh tì bàn chân lên gối và hạ chân khi mất thăng bằng trong các câu liên quan.
+- Chỉ sửa tài liệu thu âm, chưa đổi logic hoặc triển khai âm thanh lên website. Kiểm tra đủ 48 mục và 48 câu.
+
+## Chuẩn bị triển khai Vercel — 15/10/2026
+- Thêm vercel.json: Vite, build chạy setup:assets trước npm run build, xuất dist; bỏ qua .vercel trong Git.
+- npm test: 36/36 đạt. setup:assets thành công; dist chứa mô hình 5,777,746 bytes và cả hai bộ WASM.
+- npm run build đạt (43 modules) khi chạy ngoài sandbox; lần chạy trong sandbox bị EPERM realpath.
+- Đã đăng nhập và triển khai production vào tunbayacc/yoga-ai: https://yoga-ai-six.vercel.app (deployment dpl_4TgdhLeG1Jg9pWY4cV1nuxnRjdJE, READY).
+- Kiểm tra HTTP không xác thực: trang chủ, model và vision_wasm_internal.wasm đều 200. Build trên Vercel thành công.
+- Tự động kết nối GitHub riêng tư thất bại do quyền truy cập; bản hiện tại triển khai trực tiếp qua CLI, chưa tự deploy khi push.
+- Camera thật và hiệu năng trên Android/iPhone vẫn cần kiểm tra thủ công.
+
 13/10/2026 (Asia/Saigon)
 - Xác minh D:\Yoga-AI-Codex, Vite PID 8508, localhost 127.0.0.1:5173, HTTP 200.
 - Đã đọc AGENTS.md; không thêm chức năng hoặc dependency, không dùng camera thật hay vượt chặn Computer Use.

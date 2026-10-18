@@ -63,6 +63,8 @@
 .fullscreen-button:disabled { opacity: .5; cursor: not-allowed; }
 .fullscreen-hint { position: absolute; top: 20px; right: 22px; color: #d8e7dc; background: #20382bcc; padding: 7px 10px; border-radius: 5px; font-size: 11px; }
 .fullscreen-unavailable { margin: 10px 20px; font-size: 11px; line-height: 1.7; color: #7b886f; }
+.camera-stage.rear-camera video, .camera-stage.rear-camera canvas { transform: none; }
+.fullscreen-controls { flex-wrap: wrap; max-width: calc(100% - 24px); }
 .camera-stage:fullscreen { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; border-radius: 0; aspect-ratio: auto; background: #14271e; }
 .camera-stage:fullscreen::backdrop { background: #14271e; }
 .camera-stage:fullscreen video, .camera-stage:fullscreen canvas { width: 100%; height: 100%; object-fit: contain; }

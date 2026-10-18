@@ -3,6 +3,7 @@ import { PoseDetector, drawSkeleton } from '../services/poseDetector.js';
 import { evaluatePose } from '../services/poseEvaluator.js';
 import { FeedbackEngine } from '../services/feedbackEngine.js';
 import { PracticeTracker, emptyPractice } from '../services/practiceTracker.js';
+import { cameraConstraints, isMobileCameraDevice } from '../services/cameraSettings.js';
 
 const initial = { phase: 'idle', error: '', feedback: null, detected: false, delegate: null, live: emptyPractice() };
 export function cameraError(error) {
@@ -17,6 +18,9 @@ export function usePoseCamera(poseId, options) {
   const feedbackEngine = useRef(new FeedbackEngine());
   const practiceTracker = useRef(new PracticeTracker());
   const [state, setState] = useState(initial);
+  const [mobile] = useState(() => isMobileCameraDevice());
+  const [facing, setFacing] = useState('user');
+  const facingRef = useRef('user');
   useEffect(() => {
     config.current = { poseId, options }; feedbackEngine.current.reset(); practiceTracker.current.reset();
     if (canvasRef.current) canvasRef.current.getContext('2d')?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
@@ -33,15 +37,19 @@ export function usePoseCamera(poseId, options) {
     practiceTracker.current.reset();
   }, []);
   const stop = useCallback(() => { dispose(); setState(initial); }, [dispose]);
-  const start = useCallback(async () => {
+  const start = useCallback(async (requestedFacing) => {
     if (session.current) return;
     if (!navigator.mediaDevices?.getUserMedia) { setState({ ...initial, phase: 'error', error: 'Camera cần trình duyệt hỗ trợ webcam và địa chỉ localhost hoặc HTTPS.' }); return; }
     const current = { detector: new PoseDetector(), stream: null, frame: 0 };
     session.current = current; setState({ ...initial, phase: 'loading' });
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1280 }, height: { ideal: 720 }, facingMode: 'user' }, audio: false });
+      const selectedFacing = mobile && typeof requestedFacing === 'string' ? requestedFacing : facingRef.current;
+      const stream = await navigator.mediaDevices.getUserMedia(cameraConstraints(selectedFacing, mobile));
       if (session.current !== current) { stream.getTracks().forEach(t => t.stop()); return; }
       current.stream = stream;
+      const actualFacing = stream.getVideoTracks()[0]?.getSettings?.().facingMode ?? selectedFacing;
+      facingRef.current = actualFacing === 'environment' ? 'environment' : 'user';
+      setFacing(facingRef.current);
       for (const track of stream.getVideoTracks()) track.addEventListener('ended', () => {
         if (session.current === current) { dispose(); setState({ ...initial, phase: 'error', error: 'Camera đã ngắt kết nối. Hãy kết nối lại và bật camera.' }); }
       }, { once: true });
@@ -81,9 +89,18 @@ export function usePoseCamera(poseId, options) {
       current.frame = requestAnimationFrame(loop);
     } catch (error) {
       if (session.current !== current) return;
-      dispose(); setState({ ...initial, phase: 'error', error: cameraError(error) });
+      dispose(); setState({ ...initial, phase: 'error', error: mobile && ['OverconstrainedError', 'NotFoundError'].includes(error.name)
+        ? 'Không mở được camera đã chọn. Hãy đổi camera hoặc thử bật lại.' : cameraError(error) });
     }
-  }, [dispose]);
+  }, [dispose, mobile]);
+  const switchCamera = useCallback(() => {
+    if (!mobile || state.phase === 'loading') return;
+    const next = facingRef.current === 'user' ? 'environment' : 'user';
+    const restart = state.phase === 'running';
+    dispose(); setState(initial);
+    facingRef.current = next; setFacing(next);
+    if (restart) void start(next);
+  }, [mobile, state.phase, dispose, start]);
   useEffect(() => {
     const onExit = () => { dispose(); setState(initial); };
     window.addEventListener('pagehide', onExit);
@@ -95,5 +112,5 @@ export function usePoseCamera(poseId, options) {
     document.addEventListener('visibilitychange', onVisibility);
     return () => { window.removeEventListener('pagehide', onExit); document.removeEventListener('visibilitychange', onVisibility); dispose(); };
   }, [dispose]);
-  return { ...state, start, stop, videoRef, canvasRef };
+  return { ...state, start, stop, videoRef, canvasRef, mobile, facing, switchCamera };
 }

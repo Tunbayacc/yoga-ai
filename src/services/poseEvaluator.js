@@ -1,6 +1,7 @@
 import { calculateAngle, tiltFromVertical, tiltFromHorizontal, validPoint } from './angleCalculator.js';
 import { LANDMARKS as L, LANDMARK_LABELS, QUALITY, yogaPoses } from '../data/yogaPoses.js';
 import { jointCoaching } from './poseCoaching.js';
+import { coachingClip } from './recordedVoice.js';
 
 const midpoint = (a, b) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
 const opposite = side => side === 'left' ? 'right' : 'left';
@@ -105,6 +106,7 @@ export function evaluatePose(landmarks, poseId, options = {}) {
     const armPosition = side && criterion.id.endsWith('Arm') && points[L[`${side}Wrist`]].y < points[L[`${side}Shoulder`]].y ? 'above' : 'below';
     criterion.advice = jointCoaching(poseId, criterion.id, { side, role, direction: criterion.direction, raisedSide, armPosition });
     criterion.detailedCoaching = true;
+    criterion.audioId = coachingClip(poseId, criterion.id, { side, direction: criterion.direction, raisedSide, armPosition });
   }
   const unknown = criteria.some(c => c.status === 'unknown');
   return { poseId, criteria, status: unknown ? 'unknown' : criteria.every(c => c.status === 'pass') ? 'pass' : 'fail',
