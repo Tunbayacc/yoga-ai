@@ -1,0 +1,208 @@
+{
+  "date": "2026-10-18T12:49:17.704Z",
+  "base": "https://yoga-ai-six.vercel.app/",
+  "engine": "155.0.4283.62",
+  "checks": [
+    {
+      "id": "PROD-HTTP",
+      "status": "PASS",
+      "detail": {
+        "title": "Yoga AI · Không gian luyện tập"
+      }
+    },
+    {
+      "id": "PROD-ASSETS",
+      "status": "PASS",
+      "detail": [
+        {
+          "path": "models/pose_landmarker_lite.task",
+          "status": 200,
+          "bytes": 5777746,
+          "type": "application/octet-stream"
+        },
+        {
+          "path": "wasm/vision_wasm_internal.js",
+          "status": 200,
+          "bytes": 204816,
+          "type": "application/javascript; charset=utf-8"
+        },
+        {
+          "path": "wasm/vision_wasm_internal.wasm",
+          "status": 200,
+          "bytes": 11453626,
+          "type": "application/wasm"
+        },
+        {
+          "path": "wasm/vision_wasm_nosimd_internal.js",
+          "status": 200,
+          "bytes": 204669,
+          "type": "application/javascript; charset=utf-8"
+        },
+        {
+          "path": "wasm/vision_wasm_nosimd_internal.wasm",
+          "status": 200,
+          "bytes": 10647962,
+          "type": "application/wasm"
+        }
+      ]
+    },
+    {
+      "id": "PROD-POSES",
+      "status": "PASS",
+      "detail": "3 poses; both side selectors"
+    },
+    {
+      "id": "PROD-RESPONSIVE",
+      "status": "PASS",
+      "detail": [
+        {
+          "width": 320,
+          "scroll": 320,
+          "controls": {
+            "left": 88.203125,
+            "right": 285
+          }
+        },
+        {
+          "width": 360,
+          "scroll": 360,
+          "controls": {
+            "left": 128.203125,
+            "right": 325
+          }
+        },
+        {
+          "width": 390,
+          "scroll": 390,
+          "controls": {
+            "left": 158.203125,
+            "right": 355
+          }
+        },
+        {
+          "width": 768,
+          "scroll": 768,
+          "controls": {
+            "left": 139.09375,
+            "right": 382.90625
+          }
+        },
+        {
+          "width": 1024,
+          "scroll": 1024,
+          "controls": {
+            "left": 354.75,
+            "right": 598.5625
+          }
+        },
+        {
+          "width": 1440,
+          "scroll": 1440,
+          "controls": {
+            "left": 613.609375,
+            "right": 857.421875
+          }
+        }
+      ]
+    },
+    {
+      "id": "PROD-SKELETON",
+      "status": "PASS"
+    },
+    {
+      "id": "PROD-ERROR-NotAllowedError",
+      "status": "PASS",
+      "detail": "Bạn chưa cho phép truy cập camera. Hãy cấp quyền camera trong trình duyệt rồi thử lại."
+    },
+    {
+      "id": "PROD-ERROR-NotFoundError",
+      "status": "PASS",
+      "detail": "Không tìm thấy webcam. Hãy kết nối camera rồi thử lại."
+    },
+    {
+      "id": "PROD-ERROR-NotReadableError",
+      "status": "PASS",
+      "detail": "Camera đang được ứng dụng khác sử dụng hoặc không thể mở."
+    },
+    {
+      "id": "PROD-ERROR-OverconstrainedError",
+      "status": "PASS",
+      "detail": "Camera không hỗ trợ cấu hình hình ảnh được yêu cầu."
+    },
+    {
+      "id": "PROD-REAL-AI-BLANK",
+      "status": "PASS",
+      "detail": {
+        "startupMs": 7651,
+        "input": "synthetic blank stream; real model"
+      }
+    },
+    {
+      "id": "PROD-CAMERA-END",
+      "status": "PASS"
+    },
+    {
+      "id": "PROD-START-STOP-5",
+      "status": "PASS",
+      "detail": "5 cycles, real model initialization"
+    },
+    {
+      "id": "PROD-VISIBILITY",
+      "status": "PASS",
+      "detail": "synthetic visibilitychange; tracks ended"
+    },
+    {
+      "id": "PROD-PAGEHIDE",
+      "status": "PASS"
+    },
+    {
+      "id": "PROD-CANCEL-LATE-STREAM",
+      "status": "PASS"
+    },
+    {
+      "id": "PROD-NO-PAGEERROR",
+      "status": "PASS"
+    },
+    {
+      "id": "PROD-NO-UPLOAD",
+      "status": "PASS",
+      "detail": "No non-GET requests observed in this scenario; not a universal network audit"
+    }
+  ],
+  "console": [
+    {
+      "type": "warning",
+      "text": "W1018 12:49:28.260999 2225904 gl_context.cc:1118] OpenGL error checking is disabled"
+    },
+    {
+      "type": "warning",
+      "text": "W1018 12:49:35.831000 2225904 gl_context.cc:1118] OpenGL error checking is disabled"
+    },
+    {
+      "type": "warning",
+      "text": "W1018 12:49:37.239000 2225904 gl_context.cc:1118] OpenGL error checking is disabled"
+    },
+    {
+      "type": "warning",
+      "text": "W1018 12:49:38.435000 2225904 gl_context.cc:1118] OpenGL error checking is disabled"
+    },
+    {
+      "type": "warning",
+      "text": "W1018 12:49:39.638000 2225904 gl_context.cc:1118] OpenGL error checking is disabled"
+    },
+    {
+      "type": "warning",
+      "text": "W1018 12:49:40.935000 2225904 gl_context.cc:1118] OpenGL error checking is disabled"
+    },
+    {
+      "type": "warning",
+      "text": "W1018 12:49:42.214000 2225904 gl_context.cc:1118] OpenGL error checking is disabled"
+    },
+    {
+      "type": "warning",
+      "text": "W1018 12:49:43.633999 2225904 gl_context.cc:1118] OpenGL error checking is disabled"
+    }
+  ],
+  "pageErrors": [],
+  "postRequests": []
+}

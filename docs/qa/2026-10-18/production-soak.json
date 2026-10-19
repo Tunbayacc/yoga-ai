@@ -1,0 +1,69 @@
+{
+  "url": "https://yoga-ai-six.vercel.app/",
+  "input": "blank synthetic canvas, real MediaPipe, not a person",
+  "durationMs": 60222,
+  "samples": [
+    {
+      "elapsedMs": 10012,
+      "heapBytes": 12328942,
+      "videoTime": 17.742786,
+      "tracks": [
+        "live"
+      ],
+      "score": null,
+      "status": "Chưa tìm thấy người"
+    },
+    {
+      "elapsedMs": 20031,
+      "heapBytes": 12414896,
+      "videoTime": 27.762154,
+      "tracks": [
+        "live"
+      ],
+      "score": null,
+      "status": "Chưa tìm thấy người"
+    },
+    {
+      "elapsedMs": 30117,
+      "heapBytes": 12370751,
+      "videoTime": 37.848245,
+      "tracks": [
+        "live"
+      ],
+      "score": null,
+      "status": "Chưa tìm thấy người"
+    },
+    {
+      "elapsedMs": 40145,
+      "heapBytes": 13090834,
+      "videoTime": 47.876275,
+      "tracks": [
+        "live"
+      ],
+      "score": null,
+      "status": "Chưa tìm thấy người"
+    },
+    {
+      "elapsedMs": 50207,
+      "heapBytes": 13062330,
+      "videoTime": 57.938672,
+      "tracks": [
+        "live"
+      ],
+      "score": null,
+      "status": "Chưa tìm thấy người"
+    },
+    {
+      "elapsedMs": 60222,
+      "heapBytes": 12469307,
+      "videoTime": 67.953141,
+      "tracks": [
+        "live"
+      ],
+      "score": null,
+      "status": "Chưa tìm thấy người"
+    }
+  ],
+  "errors": [],
+  "result": "PASS"
+}

@@ -1,0 +1,53 @@
+
+> yoga-ai@1.0.0 test
+> node --test
+
+✔ Góc 0, 90 và 180 độ (1.9925ms)
+✔ Góc 3D sử dụng trục z (0.3666ms)
+✔ Điểm trùng, thiếu, NaN, Infinity hoặc chiều không hợp lệ trả null (0.3728ms)
+✔ Độ nghiêng theo trục dọc và ngang (0.4593ms)
+✔ Điện thoại Android/iPhone được đổi camera, desktop màn hình nhỏ không bị nhận nhầm (2.0942ms)
+✔ Điện thoại yêu cầu đúng camera, desktop luôn camera trước và không microphone (2.556ms)
+✔ Warrior phân biệt gối trước gập sâu với còn duỗi, đúng bên cơ thể (3.7426ms)
+✔ Tay cao và thấp nhận hướng chỉnh trái ngược (1.5195ms)
+✔ Tree bàn chân nâng quá cao nhận hạ, không nhắc nâng thêm (0.5432ms)
+✔ Vai cao được nhận diện theo tọa độ, chỉ đúng bên cần thả lỏng (0.6046ms)
+✔ Thiếu cổ chân nhắc vùng thật sự bị thiếu; góc quay có hướng dẫn riêng (2.4421ms)
+✔ Lời nhắc giữ tư thế đạt có nội dung riêng từng tư thế (0.4824ms)
+✔ Đọc hết hướng dẫn khi lỗi khác thay đổi; hủy khi lỗi đang nhắc đã hết (0.8591ms)
+✔ Mountain thẳng đạt bộ quy tắc riêng (3.8609ms)
+✔ Mountain gối lệch trả điều chỉnh và chỉ rõ khớp (1.1181ms)
+✔ Warrior II hỗ trợ cả hai chân trước (0.7979ms)
+✔ Warrior II từ chối hai chân thẳng và tay hướng vào trong (1.6734ms)
+✔ Tree hỗ trợ hai bên và phát hiện bàn chân chưa nâng (0.978ms)
+✔ Tất cả tư thế không đủ dữ liệu khi không tìm thấy người (0.4795ms)
+✔ Điểm khuất, ngoài ảnh, presence thấp, NaN không được kết luận đạt (1.2224ms)
+✔ Camera nhìn nghiêng bị loại (0.4405ms)
+✔ Mất một vai không làm lỗi khi xét hướng cánh tay Warrior (0.6486ms)
+✔ Góc chiếu dùng kích thước ảnh và ngưỡng điều chỉnh được (0.8794ms)
+✔ Feedback xác nhận nhiều frame, bỏ kết quả cũ ngay khi mất điểm (1.0939ms)
+✔ Feedback không đổi theo một frame nhiễu (0.5995ms)
+✔ Điểm là tỷ lệ tiêu chí đạt; dữ liệu thiếu hoặc pending không có điểm (1.3386ms)
+✔ Giữ đúng liên tục tích lũy từ frame thật đến mục tiêu 5s (1.2139ms)
+✔ Lỗi raw ngắt giữ ngay dù phản hồi làm mượt vẫn đạt (0.2451ms)
+✔ Mất người, góc quay hoặc khớp thiếu ngắt giữ và hiển thị trạng thái đúng (0.2268ms)
+✔ Không cộng bù khoảng frame ngừng, chuyển tab hoặc thời gian đi lùi (0.2664ms)
+✔ Đếm khớp cần đo, không dùng toàn bộ 33 điểm làm độ chính xác AI (0.2827ms)
+✔ Reset khi đổi tư thế hoặc dừng camera xóa thời gian cũ (0.2741ms)
+✔ 48 bản thu MP3 đủ, có header và đồng bộ nội dung kịch bản (104.6215ms)
+✔ Ánh xạ hai bên, nâng/hạ và vai cao đúng tệp (0.4889ms)
+✔ Evaluator cung cấp tệp đúng cho mọi tiêu chí sai; thiếu dữ liệu không chọn câu đạt (5.3891ms)
+✔ Lời nhắc chỉ rõ khớp và luân phiên hướng dẫn (1.5467ms)
+✔ Chỉ xác nhận tham chiếu khi mọi tiêu chí đạt, không khen dữ liệu thiếu (0.3233ms)
+✔ Chờ ổn định 1.5 giây; không nhắc lại liên tục; luân phiên sau 20 giây (1.2607ms)
+✔ Thay đổi kết quả vẫn có khoảng nghỉ 8 giây và đợi xác nhận (0.2215ms)
+✔ Frame chập chờn và đang xác nhận không tạo lời nhắc cũ (0.2706ms)
+✔ Ưu tiên giọng tiếng Việt local, không chọn nhầm ngôn ngữ (0.3314ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 499.7823

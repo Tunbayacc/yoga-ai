@@ -1,0 +1,1 @@
+PASS: mobile rear/front constraints, stream stopped on switch/stop, rear unmirrored, desktop has no switch; synthetic streams only.

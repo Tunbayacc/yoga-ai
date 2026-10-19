@@ -11,7 +11,7 @@ try {
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('http://127.0.0.1:5173/');
+  await page.goto(process.argv[3] || 'http://127.0.0.1:5174/');
   await page.getByRole('heading', { name: /Vững tư thế/ }).waitFor();
   await page.getByRole('button', { name: /Warrior II/ }).click();
   await page.getByLabel('Chân trước').selectOption('right');

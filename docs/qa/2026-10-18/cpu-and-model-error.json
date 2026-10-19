@@ -1,0 +1,9 @@
+{
+  "cpu": {
+    "delegate": "CPU",
+    "count": 33,
+    "worldCount": 33
+  },
+  "modelError": "Không thể khởi động camera hoặc AI. Kiểm tra tài nguyên mô hình (npm run setup:assets), tải lại trang và thử lại.",
+  "tracksEnded": true
+}

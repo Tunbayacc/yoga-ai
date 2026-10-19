@@ -1,0 +1,13 @@
+
+> yoga-ai@1.0.0 build
+> vite build
+
+vite v7.2.2 building client environment for production...
+transforming...
+✓ 47 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.74 kB │ gzip:   0.51 kB
+dist/assets/index-AF3Gwhj_.css   22.10 kB │ gzip:   5.72 kB
+dist/assets/index-DALtrGSr.js   374.95 kB │ gzip: 116.22 kB
+✓ built in 1.90s

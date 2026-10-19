@@ -1,0 +1,9 @@
+Kết quả console verify-browser.mjs, local http://127.0.0.1:5174/, Edge headless:
+Chọn ba tư thế và bên chân: đạt
+Lỗi quyền camera: đạt (NotAllowedError giả lập)
+Mô hình MediaPipe/WASM thực trên video trống: 9 tiêu chí unknown, không kết luận đạt
+Dừng camera giải phóng tracks và video: đạt
+Hủy trong lúc chờ quyền, stream đến muộn được giải phóng: đạt
+Ảnh mẫu công khai MediaPipe: GPU, 33 landmarks + 33 worldLandmarks, canvas có skeleton
+Viewport 390px không tràn ngang; pageerror=[]
+Không phải webcam hoặc người tập thật.

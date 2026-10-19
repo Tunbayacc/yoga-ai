@@ -1,0 +1,1 @@
+Đạt: tìm người/ẩn điểm, chấm 100, giữ đến 5s, reset khi sai/mất khớp/đổi tư thế, dừng camera, mobile, không pageerror. Đầu vào tổng hợp chỉ trong QA.

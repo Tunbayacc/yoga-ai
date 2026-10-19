@@ -109,6 +109,23 @@
 
 # Tiến độ UAT — Yoga AI
 
+## Dọn và đồng bộ kết quả QA — 19/10/2026
+- Người dùng chấp nhận giới hạn iPhone, yêu cầu hoãn xử lý QA-03; cập nhật ACCEPTED/DEFERRED trong báo cáo, không coi iPhone đã PASS hay nguyên nhân đã được QA xác minh.
+- Gom ảnh và log kiểm thử vào docs/qa/2026-10-18, giữ ảnh lịch sử docs/screenshots; bỏ dòng .vercel trùng trong gitignore. Giữ báo cáo cũ, script tái chạy và bằng chứng hai lỗi âm thanh/thông báo đang mở.
+- Không thay đổi mã ứng dụng hoặc deploy; kiểm thử gần nhất 41/41 và build đạt, diff --check được kiểm tra trước commit.
+
+## Phản hồi thiết bị thật — 19/10/2026
+- Người dùng báo iPhone không bấm được nút phóng to; thêm QA-03 (P2, REPORTED) vào UAT_REPORT.md. Chưa biết thiết bị/iOS/browser hoặc thời điểm/bản website được thử, chưa kết luận nguyên nhân và chưa tái hiện trực tiếp.
+- Phân biệt với kiểm thử Edge mô phỏng API thiếu/bị chặn đã PASS; chưa coi iPhone đã được sửa thành công. Không đổi mã ứng dụng hoặc deploy.
+
+## QA toàn hệ thống — 18/10/2026 (Samsung Innovation Campus)
+- Kiểm tra source main 334fa4c và production https://yoga-ai-six.vercel.app; cập nhật UAT_REPORT.md, checklist thủ công và bằng chứng trong docs/qa/2026-10-18. Lưu báo cáo cũ tại docs/qa/UAT_REPORT_2026-10-13.md.
+- npm test 41/41, build 47 modules; production 17/17 nhóm HTTP/UI/lifecycle đạt. Responsive 320–1440px không tràn; model + 4 JS/WASM đều 200. Không pageerror trong kịch bản production và không quan sát upload khác GET.
+- GPU thực trên ảnh mẫu trả 33+33 điểm/vẽ skeleton; CPU thực sau lỗi GPU có kiểm soát cũng trả 33+33. Các bộ live/voice/camera switch/fullscreen đạt trong phạm vi QA; 48 MP3 giải mã được.
+- Soak production 60,222ms, video trống + AI thực, đổi 3 tư thế: đạt, không pageerror, không điểm đạt giả, tracks ended sau dừng; không thay thế 10 phút trên người/điện thoại thật.
+- Phát hiện QA-01 (P2): voice-enabled.mp3 và missing-person.mp3 trùng SHA-256, cùng 15,840 bytes trên local và production; ít nhất một lời nhắc sai nội dung. QA-02 (P3): lỗi tải model hiện lệnh npm cho người dùng cuối, đã tái hiện local bằng chặn model. Chưa sửa hai lỗi trong lượt kiểm thử.
+- Chưa nghiệm thu toàn hệ thống: iQOO/iPhone, camera/người tập thật, nghe đối chiếu 48 bản thu, sai số góc, nhiệt/pin/FPS và tải dài vẫn NOT TESTED. Không sửa/deploy mã ứng dụng hoặc push GitHub trong lượt QA.
+
 ## Thoát toàn màn hình và iPhone — 18/10/2026
 - Đã triển khai READY dpl_6uihW59qCkHj2G4B4MQuCkSqpEsB tại https://yoga-ai-six.vercel.app.
 - Thay nhãn Esc bằng nút Thoát toàn màn hình góc trên bên phải, có safe-area; bỏ nút thoát trùng ở dưới.

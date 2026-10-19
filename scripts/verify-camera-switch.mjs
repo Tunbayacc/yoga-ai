@@ -18,7 +18,7 @@ try {
    window.qaStreams.push(stream);return stream;
   };
  });
- await page.goto('http://127.0.0.1:5174/');
+ await page.goto(process.argv[3] || 'http://127.0.0.1:5174/');
  await page.getByRole('button',{name:'Chuyển sang camera sau',exact:true}).click();
  assert.equal(await page.locator('.rear-camera').count(),1);
  await page.getByRole('button',{name:'Bật camera',exact:true}).first().click();
@@ -33,7 +33,7 @@ try {
  await page.getByRole('button',{name:'Tắt camera',exact:true}).click();
  assert.equal(await page.evaluate(()=>window.qaStreams[1].getTracks()[0].readyState),'ended');
  const desktop=await browser.newPage({viewport:{width:390,height:844}});
- await desktop.goto('http://127.0.0.1:5174/');
+ await desktop.goto(process.argv[3] || 'http://127.0.0.1:5174/');
  assert.equal(await desktop.getByRole('button',{name:/Chuyển sang camera/}).count(),0);
  assert.deepEqual(errors,[]);
  console.log('PASS: mobile rear/front constraints, stream stopped on switch/stop, rear unmirrored, desktop has no switch; synthetic streams only.');

@@ -1,0 +1,1 @@
+PASS native, unsupported and rejected API: top exit, fallback dimensions, skeleton toggle, scroll restore, Escape.

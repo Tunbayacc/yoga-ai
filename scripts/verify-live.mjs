@@ -31,7 +31,7 @@ try {
     }
     export function drawSkeleton() {}
   ` }));
-  await page.goto('http://127.0.0.1:5173/');
+  await page.goto(process.argv[3] || 'http://127.0.0.1:5174/');
   assert.equal(await page.locator('.live-progress').count(),0);
   await page.getByRole('button',{name:/Bật camera/}).first().click();
   await page.locator('.live-progress.live-searching').waitFor();

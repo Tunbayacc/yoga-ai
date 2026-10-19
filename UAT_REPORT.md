@@ -1,79 +1,125 @@
-# Báo cáo Kiểm thử Nghiệm thu (UAT Report) — Yoga AI
+# Báo cáo QA — Yoga AI · Samsung Innovation Campus
 
-Ngày: 13/10/2026 (Asia/Saigon). Dự án: D:\Yoga-AI-Codex.
-URL đã xác minh: http://127.0.0.1:5173/ (fragment # không được gửi qua HTTP).
+Ngày kiểm thử: **18/10/2026**, múi giờ Asia/Saigon. Báo cáo kỹ thuật của lượt kiểm thử này, không phải chứng nhận nghiệm thu của Samsung.
 
 ## Kết luận
-Đạt các kiểm tra kỹ thuật dưới đây; CHƯA đủ điều kiện nghiệm thu trải nghiệm webcam/người tập thật. Không coi dữ liệu tổng hợp hoặc ảnh mẫu là bằng chứng độ chính xác trên người tập. Không tiếp tục Computer Use hoặc vượt cơ chế chặn URL của Brave. Kiểm thử trình duyệt thực hiện bằng Edge headless riêng, không dùng webcam thật và không thay đổi quyền camera.
 
-## Bằng chứng và chức năng Pass
-| ID | Kiểm tra | Kết quả và bằng chứng | Phạm vi |
+**Đạt các kiểm tra chức năng tự động đã thực hiện; còn 2 lỗi xác nhận và chưa đủ bằng chứng nghiệm thu người tập/điện thoại thật.**
+
+- Unit: **41/41 PASS**, 0 fail, 0 skipped. Build production: PASS, 47 modules.
+- Production: **17/17 nhóm kiểm tra PASS** trong `production-results.json`. Đây là nhóm kiểm tra, không phải tỷ lệ bao phủ toàn hệ thống.
+- Các bộ kiểm tra trình duyệt riêng: ảnh mẫu/GPU, điểm và giữ tư thế, 48 MP3, chuyển camera, toàn màn hình: PASS trong phạm vi ghi dưới đây.
+- **QA-01, mức vừa:** hai bản thu cho bật giọng nói và không tìm thấy người giống hệt nhau trên local và production.
+- **QA-02, mức nhẹ:** thông báo lỗi tải AI hiển thị lệnh npm cho người dùng cuối.
+- **QA-03: ACCEPTED / DEFERRED** — ngày 19/10, người dùng chấp nhận giới hạn iPhone và yêu cầu không tiếp tục xử lý. Không tính là lỗi đang chờ sửa trong phạm vi hiện tại.
+- Chưa xác minh trên iQOO Z10 Turbo Pro/iPhone thật, người tập thật, âm thanh qua loa thật hoặc độ chính xác đo góc thực tế. Không đánh dấu các mục này PASS.
+
+## Môi trường và phạm vi
+
+| Thành phần | Giá trị |
+|---|---|
+| Production | https://yoga-ai-six.vercel.app/ |
+| Source kiểm thử | `334fa4cfccbc47f286480a5b4dd51c2bc2bb9372`, nhánh main, có bổ sung script QA local |
+| Deployment đã biết | `dpl_6uihW59qCkHj2G4B4MQuCkSqpEsB` |
+| Local integration | http://127.0.0.1:5174/ |
+| Máy/trình duyệt | Windows, Microsoft Edge headless **155.0.4283.62**, Playwright có sẵn trong runtime |
+| Runtime | Node 24.18.1; Vite 7.2.2; React 19.2.0; MediaPipe tasks-vision 0.10.32 |
+| Responsive | 320, 360, 390, 768, 1024, 1440 px; UA Android chỉ mô phỏng nhận diện thiết bị |
+| Dữ liệu | Video canvas trống; ảnh mẫu công khai MediaPipe; landmarks tổng hợp chỉ trong QA |
+
+Không thu camera của người dùng. Giả lập lỗi quyền/stream/visibility không thay thế kiểm tra quyền và phần cứng thật. Bản production được kiểm thử qua HTTPS; lượt này không sửa mã ứng dụng, không triển khai lại và không push GitHub.
+
+## Ma trận kết quả
+
+| ID | Chức năng / cách kiểm tra | Kết quả | Bằng chứng / giới hạn |
 |---|---|---|---|
-| T01 | Tiến trình Vite/URL | PASS: node PID 8508 chạy vite.js --host 127.0.0.1 từ D:\Yoga-AI-Codex; TCP 127.0.0.1:5173 thuộc PID 8508 | Tiến trình hiện tại |
-| T02 | HTTP trang chính | PASS: GET / trả 200, HTML lang=vi, title Yoga AI, entry /src/main.jsx | Dev server, chưa kiểm thử phục vụ production |
-| T03 | Unit test | PASS: npm test, 36/36, fail=0, skipped=0, exit 0; chạy lại sau sửa | Toán góc 0/90/180, 3D, dữ liệu lỗi, ba tư thế/hai bên, thiếu dữ liệu, góc quay, ổn định phản hồi, tracking, coaching, voice |
-| T04 | Build | PASS: npm run build, Vite 7.2.2, 43 modules, exit 0; build cuối 858ms | Build thành công không chứng minh mọi hành vi runtime |
-| T05 | UI tương tác | PASS: scripts/verify-browser.mjs chọn Warrior II/Tree và bên chân; Tree aria-pressed=true; viewport 390px không tràn ngang | Edge headless; chưa đánh giá chủ quan bố cục/mượt trên thiết bị thật |
-| T06 | Lỗi quyền | PASS: getUserMedia bị giả lập NotAllowedError -> alert tiếng Việt 'chưa cho phép' | Không phải thao tác từ chối quyền thật |
-| T07 | MediaPipe thực | PASS: model/WASM khởi tạo GPU; video canvas trống không kết luận đạt, 9 tiêu chí unknown | AI thực, camera tổng hợp |
-| T08 | 33 landmarks/skeleton | PASS: ảnh mẫu công khai MediaPipe pose_detector.png trả 33 landmarks và 33 worldLandmarks; canvas có pixel skeleton | Ảnh mẫu, chưa xác minh bám người thật hoặc FPS |
-| T09 | Dừng/hủy camera | PASS: Tắt camera -> mọi tracks ended, video.srcObject=null; stream trả về muộn sau hủy cũng ended | Stream tổng hợp |
-| T10 | Tích hợp feedback | PASS: scripts/verify-live.mjs: tìm người, ẩn điểm khi thiếu dữ liệu, giữ 5s, reset khi sai/mất khớp/đổi tư thế/frame đứng, mobile; pageerror=[] | Landmarks tổng hợp, detector được mock riêng trong QA |
-| T11 | JavaScript/React | PASS có giới hạn: không pageerror trong hai kịch bản trên; kiểm tra sau sửa consoleErrors=[] | Không kết luận không có lỗi trong mọi tình huống |
-| T12 | Vòng đời sau sửa | PASS: visibilitychange với document.hidden=true giả lập và pagehide được dispatch -> camera idle, tracks ended, video tháo stream | Sự kiện tổng hợp, tab/đóng trang thật cần xác nhận |
+| Q01 | Unit: góc, ba tư thế/hai bên, chất lượng điểm, feedback, coaching, tracking, ánh xạ MP3 | PASS 41/41 | `unit-tests.txt`; đầu vào tổng hợp |
+| Q02 | Build production | PASS | `build.txt`, 47 modules; CSS 22.10 kB, JS 374.95 kB trước gzip |
+| Q03 | HTTPS, title, lang=vi | PASS | PROD-HTTP, HTTP 200 |
+| Q04 | Model + 4 tệp JS/WASM | PASS | PROD-ASSETS, 5/5 HTTP 200; đúng loại WASM và kích thước |
+| Q05 | Chọn Mountain/Warrior II/Tree, chân trước/chân trụ | PASS | PROD-POSES và verify-browser; đổi lựa chọn và aria-pressed đúng |
+| Q06 | Responsive và Liquid Glass | PASS có giới hạn | 6 chiều rộng không tràn ngang, các nút trong viewport; đã xem ảnh 1440/390. Chưa đo hiệu năng blur trên điện thoại |
+| Q07 | Bật/tắt khung xương | PASS | Canvas ẩn/hiện đúng; không thay đổi luồng đánh giá trong mã |
+| Q08 | Từ chối quyền, không có webcam, webcam bận, cấu hình không hỗ trợ | PASS | 4 DOMException được tạo có kiểm soát; ứng dụng hiện lỗi. Không phải tình huống phần cứng thật |
+| Q09 | MediaPipe thực với video trống | PASS | Production: 9 tiêu chí unknown, không có điểm/đạt giả; lần khởi động đo được 7,651 ms trên môi trường này, không phải SLA |
+| Q10 | MediaPipe thực trên ảnh mẫu | PASS | Local: GPU, 33 landmarks + 33 worldLandmarks, canvas có pixel khung xương; không chứng minh độ chính xác trên người tập |
+| Q11 | GPU không khởi tạo được → CPU | PASS có giới hạn | Route QA gây lỗi GPU, engine CPU thực trả 33 + 33 điểm; không phải thử thiết bị yếu thật |
+| Q12 | Điểm/giữ 5 giây/reset | PASS | Local QA landmarks tổng hợp: 100 điểm khi đủ tiêu chí, hoàn thành 5s; sai/thiếu điểm/đổi tư thế/frame đứng đặt lại, không cộng bù |
+| Q13 | Bật/tắt camera 5 lần | PASS | Production, mô hình thực, stream trống; mọi tracks ended sau dừng |
+| Q14 | Track ended, hủy lúc chờ quyền, stream trả muộn | PASS | Production, sự kiện/stream có kiểm soát; video tháo stream, không giữ track đến muộn |
+| Q15 | Ẩn tab/rời trang | PASS có giới hạn | Production visibilitychange/pagehide được dispatch, tracks ended; cần kiểm tra đèn camera và tab thật |
+| Q16 | Điện thoại trước/sau; desktop không có nút đổi | PASS có giới hạn | Production, UA Android + stream tổng hợp; exact facingMode đúng, stream cũ ended, rear không lật. Chưa thử camera vật lý |
+| Q17 | Native fullscreen + API thiếu + API từ chối | PASS có giới hạn | Production, 3 chế độ Edge; nút thoát ở trên, fallback 390×844, cuộn phục hồi, Escape hoạt động. Không phải Safari iPhone |
+| Q18 | 48 MP3 tải và giải mã; không phụ thuộc giọng hệ thống | PASS kỹ thuật | Production verify-voice; Audio phát/dừng khi không có SpeechSynthesis. Phát hiện lỗi nội dung QA-01 bên dưới |
+| Q19 | Audio: tắt, đổi tư thế, lỗi tải | PASS | Production: dừng phần tử audio, lỗi mạng hiện thông báo; chưa nghe đủ 48 bản thu/loa thật |
+| Q20 | Lỗi tải model | PASS xử lý / UX FAIL | CPU/model-error: dừng track, hiện lỗi; nội dung lỗi chứa npm (QA-02) |
+| Q21 | JavaScript và mạng trong kịch bản production | PASS có giới hạn | pageErrors=[], không quan sát request khác GET; không phải kiểm toán bảo mật đầy đủ |
+| Q22 | Chạy liên tục | PASS có giới hạn | `production-soak.json`: 60,222 ms video trống + AI thực, đổi 3 tư thế, không pageerror, track kết thúc sau dừng; không thay bài 10 phút/người thật |
 
-### Tài nguyên HTTP và runtime
-Kiểm tra bằng Edge APIRequestContext, GET trực tiếp từng tài nguyên:
+## Lỗi đã xác nhận
 
-| Tài nguyên | HTTP | Bytes | Content-Type |
-|---|---:|---:|---|
-| /wasm/vision_wasm_internal.js | 200 | 204816 | text/javascript |
-| /wasm/vision_wasm_internal.wasm | 200 | 11453626 | application/wasm |
-| /wasm/vision_wasm_nosimd_internal.js | 200 | 204669 | text/javascript |
-| /wasm/vision_wasm_nosimd_internal.wasm | 200 | 10647962 | application/wasm |
-| /models/pose_landmarker_lite.task | 200 | 5777746 | không khai báo |
+### QA-03 — Người dùng báo không bấm được nút phóng to trên iPhone
 
-MediaPipe khởi tạo và detect thành công với GPU. requestfailed=[] và HTTP errors trong các request được Playwright theo dõi=[]. Console ban đầu có favicon 404 (request favicon do browser tạo không xuất hiện trong mảng response của page); kiểm tra riêng console.location và GET /favicon.ico xác nhận 404. Không bỏ qua lỗi chỉ vì mảng HTTP errors rỗng.
-Cảnh báo MediaPipe: 'OpenGL error checking is disabled'. Inference vẫn thành công; chưa có bằng chứng đây là lỗi chức năng. CPU fallback chưa được kiểm chứng ở lượt này. HTTP 200 cho WASM nosimd chứng minh phục vụ tài nguyên, không chứng minh đã chạy nhánh nosimd.
+**Trạng thái: ACCEPTED / DEFERRED theo yêu cầu người dùng ngày 19/10/2026. Không tiếp tục điều tra hoặc sửa trong phạm vi hiện tại.**
 
-## Issues / UX Bugs và xử lý
-1. UAT-01 — Nhỏ: favicon thiếu, console báo 404 tại /favicon.ico. Đã sửa index.html khai báo favicon SVG inline dùng ký hiệu thương hiệu hiện có. Kiểm tra trang sau sửa consoleErrors=[]; không thêm tính năng.
-2. UAT-02 — Trung bình: usePoseCamera trước sửa chỉ reset tracking khi visibilitychange; stream webcam vẫn được giữ khi ẩn tab, không đáp ứng tiêu chí giải phóng tài nguyên của UAT. Đã gọi dispose và reset state khi document.hidden. Khi quay lại trang, người dùng phải bấm Bật camera. Kiểm tra sự kiện tổng hợp xác nhận tracks ended và srcObject=null; đèn webcam thật vẫn Pending.
-3. Bất cập nhỏ còn lại qua rà soát mã: lỗi khởi tạo AI chung gợi ý 'npm run setup:assets', khó hiểu với người dùng cuối. Chưa gây lỗi này trong trình duyệt nên không đánh dấu một bug runtime đã xác nhận và không sửa thông báo ở lượt này.
+- Người dùng xác nhận: “Trên Iphone không thể bấm nút phóng to màn hình vì Ip không hỗ trợ”. Đây là phản hồi sử dụng thiết bị thật do người dùng cung cấp, không phải quan sát trực tiếp của QA.
+- Chưa biết mẫu iPhone, phiên bản iOS/trình duyệt, thời điểm thử hoặc trang có tải lại bản sửa mới nhất chưa. Chưa xác nhận nguyên nhân của hiện tượng hiện tại.
+- Bản sửa đã có chế độ mở rộng trong trang khi Fullscreen API không hỗ trợ; kiểm thử tự động trên Edge vẫn PASS cho trường hợp thiếu/bị từ chối API. Kết quả đó không bác bỏ lỗi người dùng gặp trên iPhone và không chứng minh Safari/iPhone hoạt động.
+- Người dùng yêu cầu chấp nhận giới hạn iPhone và không tiếp tục xử lý. Nếu mở lại phạm vi hỗ trợ sau này, cần ghi thiết bị/iOS/trình duyệt và tái hiện trên bản production mới nhất. Chấp nhận giới hạn không có nghĩa là đã xác minh nguyên nhân hoặc đánh dấu PASS trên iPhone.
+- Không sửa mã hoặc triển khai thêm từ phản hồi này.
 
-Không có bằng chứng đo được FPS/độ trễ, sai số góc thực tế hoặc flickering trên người thật. Unit test ổn định qua nhiều frame không thay thế việc thử dao động quanh ngưỡng trên camera. Chưa kiểm thử webcam bận/ngắt cáp, cấp quyền thật, CPU fallback phần cứng, điều kiện ánh sáng/xoay/che thật hoặc tải dài.
+### QA-01 — Hai tình huống phát cùng một bản thu
 
-## Hướng dẫn kiểm thử thủ công — Chrome hoặc Edge
-Mở http://127.0.0.1:5173/ trong Chrome/Edge. Ghi phiên bản trình duyệt, hệ điều hành, webcam, độ phân giải, ánh sáng, ngày giờ; camera ngang hông, toàn thân trong ảnh. Người dùng tự thao tác quyền camera. Mở DevTools Console và Network, lọc wasm/task và ghi lỗi; không coi nhãn '33 điểm mốc' là bằng chứng đủ 33 điểm đang nhìn thấy.
+**Mức độ: vừa (P2). Trạng thái: OPEN, chưa sửa.**
 
-| ID | Thao tác | Kỳ vọng / bằng chứng cần ghi | Trạng thái |
-|---|---|---|---|
-| M01 | Vào trang mới; chọn lần lượt Mountain, Warrior II, Tree | Camera/phản hồi phân biệt rõ; hướng dẫn dễ hiểu; thẻ chọn và nội dung đúng, không dữ liệu cũ | Pending |
-| M02 | Bấm Bật camera, tự cho phép | Ghi thời gian tới prompt và từ cho phép tới video+skeleton; có trạng thái tải, không treo hoặc lỗi Console | Pending |
-| M03 | Đứng đủ toàn thân rồi di chuyển chậm | Skeleton khớp cơ thể, không lệch ảnh gương; ghi độ trễ/giật; điểm tin cậy thấp có thể bị ẩn hợp lệ | Pending |
-| M04 | Mountain: đứng thẳng, gập riêng từng gối, nghiêng thân | Góc thay đổi đúng hướng; lời nhắc tiếng Việt nêu vùng cần chỉnh; không giữ đạt khi sai | Pending |
-| M05 | Warrior II: thử cả hai chân trước; gập/duỗi gối, nâng/hạ tay, gập khuỷu | Bên trái/phải theo cơ thể; hướng nâng/hạ/gập/duỗi đúng; đổi bên reset kết quả | Pending |
-| M06 | Tree: thử cả hai chân trụ; nâng/hạ chân, đưa chân xa chân trụ | Tiêu chí và lời nhắc đúng bên, không yêu cầu nâng thêm khi đã quá cao; tránh tì chân lên gối | Pending |
-| M07 | Với mỗi tư thế: bước xa, xoay nghiêng, che cổ chân/gối, rời ảnh, che camera | Không đủ dữ liệu/chưa thấy người; bỏ kết quả đạt và skeleton cũ, bộ đếm về 0; không kết luận sai khi thiếu dữ liệu | Pending |
-| M08 | Di chuyển chậm quanh ranh giới góc đúng/sai trong 20–30 giây | Ghi video màn hình nếu đồng ý hoặc số lần phản hồi đổi; xác nhận phản hồi ổn định nhưng vẫn cập nhật, không nhấp nháy liên tục | Pending |
-| M09 | Từ chối quyền; sau đó tự cấp lại và bấm Bật camera | Lỗi thân thiện, giao diện dùng được, mở lại thành công; ghi nguyên văn lỗi | Pending |
-| M10 | Tắt camera; lặp bật/tắt 5 lần; tắt lúc đang tải | Đèn/chỉ báo webcam tắt, không stream muộn; mở lại được | Pending |
-| M11 | Đang chạy -> chuyển tab hoặc thu nhỏ cửa sổ -> trở lại | Camera đã tắt, đèn tắt; quay lại bấm Bật camera để tiếp tục, không cộng bù thời gian giữ | Pending |
-| M12 | Đang chạy -> tải lại/đóng trang | Đèn/chỉ báo webcam tắt; không giữ tài nguyên sau thoát (đóng các app khác dùng webcam để tránh nhiễu) | Pending |
-| M13 | Chạy 10 phút và đổi ba tư thế | Ghi giật/độ trễ, lỗi Console, bộ nhớ và phản hồi; không treo, không kẹt camera | Pending |
+- Tệp: `public/audio/vi/voice-enabled.mp3` và `missing-person.mp3`.
+- Cả hai tệp production trả 200, cùng **15,840 bytes**, cùng SHA-256:
+  `7ee4e15bbf17e42e1261dc1c8338576289661100e551cdb01bf51bb5c710b46b`.
+- Kỳ vọng: bật giọng đọc câu xác nhận; không tìm thấy người đọc hướng dẫn đưa toàn thân vào khung hình.
+- Thực tế: dữ liệu MP3 giống hệt nhau, nên hai tình huống phát cùng âm thanh. Không cần suy đoán bản nào được thu đúng để kết luận hai nội dung riêng chưa được cung cấp.
+- Tác động: ít nhất một tình huống có lời nhắc không phù hợp; chữ “lời nhắc gần nhất” có thể khác câu nghe được.
+- Tái hiện: bật giọng để nghe câu xác nhận, sau đó bật camera không có người và chờ qua thời gian ổn định/khoảng nghỉ; so sánh âm thanh. Bằng chứng kỹ thuật: `duplicate-audio.json` (hash production và local trùng).
+- Đề xuất: nghe đối chiếu hai tệp, thu lại tệp sai theo kịch bản. Sau thay thế cần kiểm tra bằng tai và hash, rồi deploy.
 
-### Xác minh số landmarks và góc
-Skeleton không nhất thiết vẽ mọi điểm: drawSkeleton ẩn điểm visibility/presence thấp. Muốn kiểm chứng 33 phần tử trên người thật, dùng DevTools Sources đặt breakpoint sau dòng `const landmarks = result?.landmarks?.[0]` trong usePoseCamera.js, quan sát `landmarks.length === 33` và `result.worldLandmarks[0].length === 33` khi có người. Tháo breakpoint trước khi đánh giá độ mượt vì pause sẽ làm video dừng.
-Để đánh giá sai số góc, chọn một frame ổn định, ghi tọa độ ba khớp và kích thước video, tính góc 2D độc lập với tỷ lệ pixel, so với UI (được làm tròn). Ghi sai số và ngưỡng chấp nhận do nhóm sản phẩm thống nhất trước khi nghiệm thu; góc chiếu 2D không phải góc giải phẫu 3D thực.
+### QA-02 — Thông báo phục hồi lỗi AI dành cho lập trình viên
 
-Mẫu kết quả từng ca: ID | thiết bị/browser | bước | expected | actual | Pass/Fail/Blocked | ảnh/log | độ trễ hoặc sai số | người kiểm/ngày giờ.
-Chỉ ký nghiệm thu camera/AI sau khi hoàn tất các ca Pending và xác định các lỗi còn lại.
+**Mức độ: nhẹ (P3). Trạng thái: OPEN, chưa sửa.**
 
-## Đề xuất nhỏ
-- Dùng lời nhắc phục hồi lỗi AI phù hợp người dùng cuối; giữ lệnh npm trong tài liệu kỹ thuật.
-- Ghi rõ camera tự tắt khi rời tab để người dùng hiểu vì sao cần bật lại.
-- Đặt ngưỡng chấp nhận độ trễ/sai số/flickering và đo trên thiết bị mục tiêu trước nghiệm thu.
+- Tái hiện local: chặn tải `/models/pose_landmarker_lite.task` trong route QA rồi bật camera.
+- Thực tế: “Không thể khởi động camera hoặc AI. Kiểm tra tài nguyên mô hình (npm run setup:assets), tải lại trang và thử lại.” Tracks vẫn được dừng đúng.
+- Kỳ vọng: hướng dẫn người dùng kiểm tra mạng/tải lại/thử lại; lệnh npm chỉ nằm trong tài liệu kỹ thuật.
+- Bằng chứng: `cpu-and-model-error.json`. Chưa tái hiện riêng trên production vì không gây gián đoạn dịch vụ thật; lỗi được tạo trong phiên QA local cùng source.
 
-## Ghi chú quá trình kiểm tra
-Lần kiểm tra lifecycle đầu dùng canvas chưa phát frame liên tục nên chưa đi tới trạng thái nhận diện; đã dừng, sửa harness QA phát frame liên tục rồi chạy đạt. Đây là lỗi chuẩn bị đầu vào test, không phải lỗi ứng dụng. Không tính lần chưa hoàn thành là Pass.
-Các script QA bổ sung được lưu ở scripts/uat-runtime-check.cjs, scripts/uat-lifecycle-check.cjs và scripts/uat-check404.cjs; sử dụng Playwright của runtime hiện có (đường dẫn cố định máy này), không thêm dependency ứng dụng. verify-browser.mjs và verify-live.mjs có sẵn. Unit test/build đã chạy lại sau sửa; không chạy lại toàn bộ hai script cũ vì các thay đổi chỉ ảnh hưởng favicon và visibility lifecycle, đã kiểm tra trực tiếp hai điểm này.
+Cảnh báo OpenGL “error checking is disabled” xuất hiện khi khởi tạo mô hình. Inference thành công; chưa có bằng chứng đây là lỗi chức năng. Các lỗi mạng có chủ đích trong ca lỗi không được tính là sự cố production.
+
+## Các mục chưa được xác minh
+
+| ID | Mục cần làm trên phần cứng thật | Trạng thái |
+|---|---|---|
+| M01 | iQOO Z10 Turbo Pro: Chrome, cấp/từ chối quyền thật; trước/sau, xoay ngang/dọc | NOT TESTED — chưa có phiên thiết bị |
+| M02 | iPhone: Safari và Chrome, mở rộng camera, tai thỏ, nút thoát, thanh trình duyệt | NOT TESTED — mô phỏng API không thay Safari |
+| M03 | Người tập thật: đủ 3 tư thế và 2 bên chân | NOT TESTED |
+| M04 | Ánh sáng yếu, xoay nghiêng, che từng khớp, rời/đi vào khung hình thật | NOT TESTED |
+| M05 | Sai số góc so với đo độc lập/chuyên gia, độ trễ và nhấp nháy quanh ngưỡng | NOT TESTED — chưa có ngưỡng nghiệm thu được thống nhất |
+| M06 | Nghe đủ 48 bản thu: đúng câu, trái/phải, nâng/hạ, phát âm và âm lượng | NOT TESTED — giải mã thành công không chứng minh nội dung đúng |
+| M07 | Lời nhắc tự phát sau cú nhấn ban đầu và chạy lâu trên iOS/Android | NOT TESTED |
+| M08 | Camera bận/ngắt kết nối thật; chỉ báo camera tắt khi rời tab/đóng trang | NOT TESTED |
+| M09 | Chạy ít nhất 10 phút trên điện thoại: FPS, nhiệt, pin, bộ nhớ và blur | NOT TESTED — bài video trống ngắn không thay thế |
+| M10 | CPU fallback trên thiết bị GPU không tương thích thật | NOT TESTED — mới kiểm tra đường dự phòng bằng lỗi QA |
+| M11 | Hỗ trợ tiếp cận đầy đủ: trình đọc màn hình, tương phản trên video thật, bàn phím | NOT TESTED đầy đủ — mới kiểm tra ngữ nghĩa/chức năng liên quan |
+
+Soak 60 giây: JS heap lấy mẫu từ 12,328,942 đến 13,090,834 bytes; mẫu cuối 12,469,307 bytes. Đây không phải toàn bộ bộ nhớ WASM/GPU và không đủ kết luận không rò rỉ bộ nhớ.
+
+Ngày 19/10/2026 đã nhận phản hồi người dùng không bấm được nút phóng to trên iPhone (QA-03); người dùng đã chấp nhận giới hạn và hoãn xử lý. M02 vẫn chưa được QA trực tiếp tái hiện, không đánh dấu PASS. Các mục còn lại chưa có kết quả thiết bị thật. Không quy đổi các mục NOT TESTED thành PASS.
+
+## Bằng chứng và chạy lại
+
+Bằng chứng nằm ở `docs/qa/2026-10-18/`: JSON kết quả production, hash âm thanh, CPU/model error, soak, log unit/build/voice/camera/fullscreen/live và ảnh desktop/mobile. Ảnh production-mobile dùng viewport mobile trên Edge desktop, không phải ảnh chụp iPhone/iQOO. Ảnh tích hợp mới có điểm tổng hợp trong docs/qa/2026-10-18/local-live-*-qa.png được gắn nhãn QA; ảnh lịch sử trong docs/screenshots được giữ nguyên.
+
+Chạy `npm test`, `npm run build`. Script browser nhận đối số thứ nhất là đường dẫn node_modules có Playwright; không thêm dependency vào ứng dụng. `verify-browser.mjs` và `verify-live.mjs` cần Vite dev vì import/intercept module source; không dùng hai script này để khẳng định đã thử bundle production. `verify-voice.mjs`, `verify-camera-switch.mjs`, `verify-fullscreen.mjs` nhận URL ở đối số thứ hai để chạy production.
+
+Các script bổ sung: `qa-production.mjs` (HTTP/UI/lifecycle), `qa-cpu-model-error.mjs` (local CPU/fault injection), `qa-soak.mjs` (60s production video trống). Dữ liệu tổng hợp và fault injection chỉ ở script QA. Báo cáo cũ được giữ tại `docs/qa/UAT_REPORT_2026-10-13.md`.
+
+## Đề nghị nghiệm thu
+
+Chưa ký nghiệm thu toàn hệ thống trên người thật. Ưu tiên xử lý QA-01, sau đó chạy checklist trên iQOO; các mục iPhone được hoãn theo yêu cầu người dùng, nghe đối chiếu bản thu và thử 3 tư thế thật. QA-02 là lỗi hướng dẫn phục hồi nhẹ. Các kiểm tra kỹ thuật đã thực hiện đạt trong phạm vi nêu trên, không phải cam kết AI đánh giá chính xác hoặc an toàn tuyệt đối.
