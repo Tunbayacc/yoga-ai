@@ -1,9 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { voiceClips } from '../src/data/voiceClips.js';
 import { coachingClip, recordedReminder } from '../src/services/recordedVoice.js';
 import { evaluatePose } from '../src/services/poseEvaluator.js';
+
+test('Câu bật giọng và câu tìm người không dùng cùng dữ liệu MP3 (QA-01)', () => {
+  const hash = id => createHash('sha256').update(readFileSync(new URL(`../public/audio/vi/${id}.mp3`, import.meta.url))).digest('hex');
+  assert.notEqual(hash('voice-enabled'), hash('missing-person'));
+});
 
 test('48 bản thu MP3 đủ, có header và đồng bộ nội dung kịch bản', () => {
   const files = readdirSync(new URL('../public/audio/vi/', import.meta.url));

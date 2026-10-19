@@ -1,0 +1,12 @@
+[
+  {
+    "id": "voice-enabled",
+    "bytes": 15840,
+    "sha256": "7ee4e15bbf17e42e1261dc1c8338576289661100e551cdb01bf51bb5c710b46b"
+  },
+  {
+    "id": "missing-person",
+    "bytes": 41904,
+    "sha256": "efef0de9920b281ac3acaaff35da8d928c74aac54d0bfa8420aaaa3af1c4dc77"
+  }
+]

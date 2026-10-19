@@ -109,6 +109,17 @@
 
 # Tiến độ UAT — Yoga AI
 
+## Chuẩn bị phiên thiết bị thật — 19/10/2026
+- Thông tin biên bản theo yêu cầu người dùng: La Van Tuan, Điện thoại Android, Chrome “bản mới nhất”. Đã ghi vào biên bản; số phiên bản Chrome/Android chưa có, thời gian và kết quả chưa được cung cấp.
+- Tạo docs/qa/2026-10-19/REAL_DEVICE_SESSION.md: thông tin người thử/thiết bị/browser, ba tư thế hai bên phù hợp, che khớp, dừng/chuyển camera, ít nhất 600 giây camera chạy thực và bảng ghi kết quả.
+- Phiên CHƯA THỰC HIỆN, chờ người thử trên thiết bị thật; không tự điền Pass hoặc thời gian giả. Yêu cầu thông tin người thử và trình duyệt đã được gửi.
+- QA-03/phóng to iPhone giữ Accepted/Deferred theo yêu cầu, không ghi Pass. Không sửa ứng dụng hoặc triển khai trong bước này.
+
+## Kiểm tra lại QA-01 — 19/10/2026
+- Người dùng thay missing-person.mp3: 41,904 bytes, SHA-256 efef0de9920b281ac3acaaff35da8d928c74aac54d0bfa8420aaaa3af1c4dc77, khác voice-enabled.mp3. Thêm regression test chống trùng hai tệp.
+- npm test 42/42 đạt, build đạt. Deploy READY dpl_E43FeCyhoMqELc8w5NLKVd5NVQtV tại https://yoga-ai-six.vercel.app; hash production đã khớp bản mới.
+- verify-voice production đạt: 48 MP3 giải mã, phát/dừng, đổi tư thế, xử lý lỗi tải. QA-01 FIXED về dữ liệu trùng; nội dung nói/phát âm cần người dùng nghe xác nhận. Chưa push GitHub trong lượt này.
+
 ## Dọn và đồng bộ kết quả QA — 19/10/2026
 - Người dùng chấp nhận giới hạn iPhone, yêu cầu hoãn xử lý QA-03; cập nhật ACCEPTED/DEFERRED trong báo cáo, không coi iPhone đã PASS hay nguyên nhân đã được QA xác minh.
 - Gom ảnh và log kiểm thử vào docs/qa/2026-10-18, giữ ảnh lịch sử docs/screenshots; bỏ dòng .vercel trùng trong gitignore. Giữ báo cáo cũ, script tái chạy và bằng chứng hai lỗi âm thanh/thông báo đang mở.

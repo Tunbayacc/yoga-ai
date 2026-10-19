@@ -4,15 +4,15 @@ Ngày kiểm thử: **18/10/2026**, múi giờ Asia/Saigon. Báo cáo kỹ thu�
 
 ## Kết luận
 
-**Đạt các kiểm tra chức năng tự động đã thực hiện; còn 2 lỗi xác nhận và chưa đủ bằng chứng nghiệm thu người tập/điện thoại thật.**
+**Đạt các kiểm tra chức năng tự động đã thực hiện; QA-01 đã khắc phục dữ liệu trùng ngày 19/10, còn QA-02 đang mở và chưa đủ bằng chứng nghiệm thu người tập/điện thoại thật.**
 
-- Unit: **41/41 PASS**, 0 fail, 0 skipped. Build production: PASS, 47 modules.
+- Unit ngày 18/10: **41/41 PASS**; kiểm tra lại sau thay MP3 ngày 19/10: **42/42 PASS**, gồm kiểm thử chống trùng tệp. Build production: PASS, 47 modules.
 - Production: **17/17 nhóm kiểm tra PASS** trong `production-results.json`. Đây là nhóm kiểm tra, không phải tỷ lệ bao phủ toàn hệ thống.
 - Các bộ kiểm tra trình duyệt riêng: ảnh mẫu/GPU, điểm và giữ tư thế, 48 MP3, chuyển camera, toàn màn hình: PASS trong phạm vi ghi dưới đây.
-- **QA-01, mức vừa:** hai bản thu cho bật giọng nói và không tìm thấy người giống hệt nhau trên local và production.
+- **QA-01: FIXED (19/10)** — đã thay missing-person.mp3, hash local và production khác voice-enabled.mp3; nội dung phát âm vẫn cần người dùng nghe xác nhận.
 - **QA-02, mức nhẹ:** thông báo lỗi tải AI hiển thị lệnh npm cho người dùng cuối.
 - **QA-03: ACCEPTED / DEFERRED** — ngày 19/10, người dùng chấp nhận giới hạn iPhone và yêu cầu không tiếp tục xử lý. Không tính là lỗi đang chờ sửa trong phạm vi hiện tại.
-- Chưa xác minh trên iQOO Z10 Turbo Pro/iPhone thật, người tập thật, âm thanh qua loa thật hoặc độ chính xác đo góc thực tế. Không đánh dấu các mục này PASS.
+- Chưa xác minh trên Điện thoại Android/iPhone thật, người tập thật, âm thanh qua loa thật hoặc độ chính xác đo góc thực tế. Không đánh dấu các mục này PASS.
 
 ## Môi trường và phạm vi
 
@@ -70,7 +70,9 @@ Không thu camera của người dùng. Giả lập lỗi quyền/stream/visibil
 
 ### QA-01 — Hai tình huống phát cùng một bản thu
 
-**Mức độ: vừa (P2). Trạng thái: OPEN, chưa sửa.**
+**Mức độ: vừa (P2). Trạng thái: FIXED về dữ liệu trùng ngày 19/10/2026.**
+
+Người dùng cung cấp missing-person.mp3 mới (41,904 bytes, SHA-256 efef0de9920b281ac3acaaff35da8d928c74aac54d0bfa8420aaaa3af1c4dc77). Đã triển khai và xác nhận hash production giống local, khác voice-enabled.mp3. Thêm kiểm thử hồi quy chống trùng dữ liệu. Chưa nghe xác minh phát âm/nội dung thực tế. Bằng chứng: docs/qa/2026-10-19/audio-retest.json. Các bằng chứng trùng bên dưới là lịch sử trước sửa.
 
 - Tệp: `public/audio/vi/voice-enabled.mp3` và `missing-person.mp3`.
 - Cả hai tệp production trả 200, cùng **15,840 bytes**, cùng SHA-256:
@@ -96,8 +98,8 @@ Cảnh báo OpenGL “error checking is disabled” xuất hiện khi khởi t�
 
 | ID | Mục cần làm trên phần cứng thật | Trạng thái |
 |---|---|---|
-| M01 | iQOO Z10 Turbo Pro: Chrome, cấp/từ chối quyền thật; trước/sau, xoay ngang/dọc | NOT TESTED — chưa có phiên thiết bị |
-| M02 | iPhone: Safari và Chrome, mở rộng camera, tai thỏ, nút thoát, thanh trình duyệt | NOT TESTED — mô phỏng API không thay Safari |
+| M01 | Điện thoại Android: Chrome, cấp/từ chối quyền thật; trước/sau, xoay ngang/dọc | NOT TESTED — chưa có phiên thiết bị |
+| M02 | Giới hạn phóng to iPhone (QA-03) | Accepted/Deferred theo người dùng — không ghi Pass; các khía cạnh iPhone khác chưa được thử thật |
 | M03 | Người tập thật: đủ 3 tư thế và 2 bên chân | NOT TESTED |
 | M04 | Ánh sáng yếu, xoay nghiêng, che từng khớp, rời/đi vào khung hình thật | NOT TESTED |
 | M05 | Sai số góc so với đo độc lập/chuyên gia, độ trễ và nhấp nháy quanh ngưỡng | NOT TESTED — chưa có ngưỡng nghiệm thu được thống nhất |
@@ -122,4 +124,6 @@ Các script bổ sung: `qa-production.mjs` (HTTP/UI/lifecycle), `qa-cpu-model-er
 
 ## Đề nghị nghiệm thu
 
-Chưa ký nghiệm thu toàn hệ thống trên người thật. Ưu tiên xử lý QA-01, sau đó chạy checklist trên iQOO; các mục iPhone được hoãn theo yêu cầu người dùng, nghe đối chiếu bản thu và thử 3 tư thế thật. QA-02 là lỗi hướng dẫn phục hồi nhẹ. Các kiểm tra kỹ thuật đã thực hiện đạt trong phạm vi nêu trên, không phải cam kết AI đánh giá chính xác hoặc an toàn tuyệt đối.
+Yêu cầu phiên thật ngày 19/10: ba tư thế, Mountain kiểm tra hai gối, Warrior II hai chân trước, Tree hai chân trụ; che khớp, dừng/chuyển camera; camera hoạt động ít nhất 600 giây có thiết bị, browser, người thử và kết quả. Biên bản `docs/qa/2026-10-19/REAL_DEVICE_SESSION.md` đang CHỜ NGƯỜI THỬ, chưa có phiên thực tế hoặc thời gian bắt đầu/kết thúc. Không dùng bài soak tổng hợp để thay thế yêu cầu này. Giới hạn phóng to iPhone giữ Accepted/Deferred.
+
+Chưa ký nghiệm thu toàn hệ thống trên người thật. QA-01 đã thay dữ liệu trùng; cần nghe xác nhận bản thu mới và chạy checklist trên điện thoại Android; các mục iPhone được hoãn theo yêu cầu người dùng, nghe đối chiếu bản thu và thử 3 tư thế thật. QA-02 là lỗi hướng dẫn phục hồi nhẹ. Các kiểm tra kỹ thuật đã thực hiện đạt trong phạm vi nêu trên, không phải cam kết AI đánh giá chính xác hoặc an toàn tuyệt đối.
